@@ -16,7 +16,7 @@ const encodeImage = (imagePath) => {
     return imageFile.toString('base64');
   };
 // 将xxx/eagle.png替换为你本地图像的绝对路径
-const base64Image = encodeImage("assets/images/graduate.png")
+const base64Image = encodeImage("assets/images/math.png")
 async function main() {
     const completion = await openai.chat.completions.create({
         model: "qwen-vl-max",  // 此处以qwen-vl-max-latest为例，可按需更换模型名称。模型列表：https://help.aliyun.com/model-studio/getting-started/model
@@ -30,10 +30,7 @@ async function main() {
                           // JPEG图像： data:image/jpeg;base64,${base64Image}
                          // WEBP图像： data:image/webp;base64,${base64Image}
                         "image_url": {"url": `data:image/png;base64,${base64Image}`},},
-                        {"type": "text", "text": "给出图中人脸的坐标,图片左上角为原点,返回json的数组对象，对象包含topLeft，bottomRight，和desc属性"}]}],
-        response_format: {
-            type: "json_object"
-        }
+                        {"type": "text", "text": "分析图片里的问题给出详细解题步骤"}]}]
     });
     console.log(completion.choices[0].message.content);
 }
